@@ -10,27 +10,6 @@ pc = portal.Context()
 # Create a Request object to start building the RSpec.
 request = pc.makeRequestRSpec()
 
-tourDescription = \
-"""
-This profile provides the template for a full research cluster with head node, scheduler, compute nodes, and shared file systems.
-First node (head) should contain: 
-- Shared home directory using Networked File System
-- Management server for SLURM
-Second node (metadata) should contain:
-- Metadata server for SLURM
-Third node (storage):
-- Shared software directory (/software) using Networked File System
-Remaining three nodes (computing):
-- Compute nodes  
-"""
-
-#
-# Setup the Tour info with the above description and instructions.
-#  
-tour = IG.Tour()
-tour.Description(IG.Tour.TEXT,tourDescription)
-request.addTour(tour)
-
 prefixForIP = "192.168.1."
 
 link = request.LAN("lan")
@@ -44,7 +23,7 @@ for i in range(15):
     node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/head_setup.sh"))
     node.addService(pg.Execute(shell="sh", command="sudo /local/repository/head_setup.sh"))
     
-    #install mpi ----------- just testing mounting
+    #install mpi
     node.addService(pg.Execute(shell="sh", command="sudo chmod 777 /local/repository/install_mpi.sh"))
     node.addService(pg.Execute(shell="sh", command="sudo /local/repository/install_mpi.sh"))
   
